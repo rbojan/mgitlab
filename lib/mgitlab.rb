@@ -68,6 +68,7 @@ module Mgitlab
     end
 
     desc 'vars <gitlab_path>', 'print vars in <gitlab_path>'
+    option :reveal, :type => :boolean, :desc => 'reveal values'
     def vars(gitlab_path)
       Helpers.configure_gitlab_client
 
@@ -105,7 +106,7 @@ module Mgitlab
           end
         else
           Gitlab.group_variables(n[:full_path]).auto_paginate.each do |v|
-            puts "#{offset_str_var} #{v.key}"
+            puts "#{offset_str_var} #{v.key} #{v.value if options[:reveal]}"
           end
         end
       end
